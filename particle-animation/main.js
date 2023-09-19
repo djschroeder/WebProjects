@@ -30,6 +30,14 @@ canvas.addEventListener('mousemove', function(event){
     }
 })
 
+window.addEventListener('touchmove', function(event)) {
+    mouse.x = event.x;
+    mouse.y = event.y;
+    for (i = 0; i < 5; i++){
+        particlesArray.push(new Particle());
+    }
+}
+
 class Particle {
     constructor(){
         this.x = mouse.x;
