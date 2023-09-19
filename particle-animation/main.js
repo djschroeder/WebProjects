@@ -33,7 +33,7 @@ canvas.addEventListener('mousemove', function(event){
 window.addEventListener('touchmove', function(event) {
     mouse.x = event.touches[0].clientX;
     mouse.y = event.touches[0].clientY;
-    for (i = 0; i < 5; i++){
+    for (i = 0; i < 3; i++){
         particlesArray.push(new Particle());
     }
 });
