@@ -1,0 +1,269 @@
+*, *::after, *::before {
+    box-sizing: border-box;
+}
+
+/* Global variables for defining board display size */
+:root {
+    --mini-board-size: calc(min((100vw / 3), (100vh / 3)) * .8);
+    --cell-size: calc(var(--mini-board-size) * .3);
+    --mark-size: calc(var(--cell-size) * .9);
+}
+
+/* Remove margins from page display */
+body {
+    margin: 0;
+}
+
+/* Defines the characteristics of overall gameboard */
+.board {
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    position: relative;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    justify-items: center;
+    grid-template-columns: repeat(3,auto);
+    z-index: 1;
+}
+
+/* Defines the 9 mini-board characteristics */
+.mini-board {
+    width: var(--mini-board-size);
+    height: var(--mini-board-size);
+    border: 3px solid black;
+    display: grid;
+    position: relative;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    justify-items: center;
+    grid-template-columns: repeat(3,auto);
+    cursor: pointer;
+    z-index: 2;
+}
+
+/* Defines the characteristics of 9 cells in each mini-board */
+.cell {
+    width: var(--cell-size);
+    height: var(--cell-size);
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    justify-items: center;
+    position: relative;
+    cursor: pointer;
+    z-index: 3;
+}
+
+/* REMOVE CELL BORDERS */
+
+/* Top Border */
+.mini-board:first-child,
+.mini-board:nth-child(2),
+.mini-board:nth-child(3),
+.cell:first-child,
+.cell:nth-child(2),
+.cell:nth-child(3) {
+    border-top: none;
+}
+
+/* Bottom Border */
+.mini-board:last-child,
+.mini-board:nth-child(8),
+.mini-board:nth-child(7),
+.cell:last-child,
+.cell:nth-child(8),
+.cell:nth-child(7) {
+    border-bottom: none;
+}
+
+/* Left Border */
+.mini-board:nth-child(3n + 1),
+.cell:nth-child(3n + 1) {
+    border-left: none;
+}
+
+/* Right Border */
+.mini-board:nth-child(3n + 3),
+.cell:nth-child(3n + 3) {
+    border-right: none;
+}
+
+
+/* CURSOR EFFECT */
+
+/* Cursor Effect for Non-Active Mini-Boards and Marked Cells */
+.mini-board:not(.active-mini-board) .cell,
+.mini-board .cell.x, 
+.mini-board .cell.circle {
+    cursor: not-allowed;
+}
+
+/* Cover entire mini-board for cursor effect */
+.mini-board:not(.active-mini-board).x::before,
+.mini-board:not(.active-mini-board).circle::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    cursor: not-allowed;
+    z-index: 4; 
+}
+
+
+
+/* ----------MARK CREATION---------- */
+
+.mini-board.x::before, .mini-board.circle::before {
+    z-index: 4; /* Above small marks */
+}
+
+/* ---X MARKS--- */
+/* Create two lines that form large X using center child cell pseudo element */
+.mini-board.x .cell:nth-child(5)::before,
+.mini-board.x .cell:nth-child(5)::after {
+    content: '';
+    position: absolute;
+    width: calc(var(--mark-size) * .4);
+    height: calc(var(--mark-size) * 3.5);
+    background-color: black;
+}
+
+/* Create two lines that form small X */
+.cell.x::before,
+.cell.x::after, 
+.board.x .active-mini-board .cell:not(.x):not(.circle):hover::before, 
+.board.x .active-mini-board .cell:not(.x):not(.circle):hover::after {
+    content: '';
+    position: absolute;
+    width: calc(var(--mark-size) * .15);
+    height: var(--mark-size);
+    background-color: black;
+}
+
+/* Rotate 'before' line clockwise */
+.mini-board.x .cell::before, 
+.board.x .active-mini-board .cell:not(.x):not(.circle):hover::before,
+.cell.x::before {
+    transform: rotate(45deg);
+}
+
+/* Rotate 'after' line counterclockwise */
+.mini-board.x .cell::after,
+.board.x .active-mini-board .cell:not(.x):not(.circle):hover::after,
+.cell.x::after {
+    transform: rotate(-45deg);
+}
+
+
+/* ---O MARKS--- */
+/* Draw large circle */
+.mini-board.circle::after {
+    content: '';
+    position: absolute;
+    width: calc(var(--mark-size) * 3);
+    height: calc(var(--mark-size) * 3);
+    background: radial-gradient(
+        circle at center,
+        transparent 50%,
+        black 50%,
+        black 70%,
+        transparent 70%
+    );
+}
+
+/* Draw small circle */
+.cell.circle::after,
+.board.circle .active-mini-board .cell:not(.x):not(.circle):hover::after {
+    content: '';
+    position: absolute;
+    width: var(--mark-size);
+    height: var(--mark-size);
+    background: radial-gradient(
+        circle at center,
+        transparent 50%,
+        black 50%,
+        black 70%,
+        transparent 70%
+    );
+}
+
+
+/* ---'DRAW' MARK--- */
+/* Used if miniboard ends in a draw */
+.mini-board.draw .cell:nth-child(5)::before {
+    content: '';
+    position: absolute;
+    width: calc(var(--mark-size) * .3);
+    height: calc(var(--mark-size) * 5);
+    background-color: black;
+    transform: rotate(45deg); /* Keep the rotation for one line of X */
+    z-index: 5; /* Adjust z-index as needed */
+}
+
+
+/* HOVER EFFECT COLOR*/
+
+/* When X's turn, displays small grey x's when cell hovered over */
+.board.x .active-mini-board .cell:not(.x):not(.circle):hover::before,
+.board.x .active-mini-board .cell:not(.x):not(.circle):hover::after {
+    background-color: lightgrey;
+}
+
+/* When Circles turn, displays small grey o's when cell hovered over */
+.board.circle .active-mini-board .cell:not(.x):not(.circle):hover::after {
+    background: radial-gradient(
+        circle at center,
+        transparent 50%,
+        lightgrey 50%,
+        lightgrey 70%,
+        transparent 70%
+    );
+}
+
+.active-mini-board {
+    background-color: rgb(84, 189, 210);
+}
+
+
+/* WINNING MESSAGE DISPLAY SETTINGS*/
+.winning-message {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, .8);
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 5rem;
+    flex-direction: column;
+    z-index: 5;
+}
+
+.winning-message button {
+    font-size: 3rem;
+    background-color: white;
+    border: 5px solid black;
+    padding: .25em .5em;
+    cursor: pointer;
+    z-index: 5;
+}
+
+.winning-message button:hover {
+    background-color: black;
+    color: white;
+    border-color: white;
+}
+
+.winning-message.show {
+    display: flex;
+}
