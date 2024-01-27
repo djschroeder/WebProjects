@@ -24,7 +24,7 @@ Here is a list of the projects available in this repository:
 
 To view a specific project, simply append the appropriate web path to the base URL of this repository. For example, if you want to access "Project 1," you can navigate to:
 
-<https://djschroe.github.io/web-projects/uttt-game/uttt.html>
+<https://djschroeder.github.io/web-projects/uttt-game/uttt.html>
 
 \## Usage
 
