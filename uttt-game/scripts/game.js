@@ -1,100 +1,126 @@
-// Game class controls the flow and rules of the game
+// Constants representing the classes for X and O
+const X_CLASS = 'x';
+const CIRCLE_CLASS = 'circle';
+
+// All the possible winning combinations for the board
+const WINNING_COMBINATIONS = [
+    [0, 1, 2], [3, 4, 5], [6, 7, 8], // rows
+    [0, 3, 6], [1, 4, 7], [2, 5, 8], // columns
+    [0, 4, 8], [2, 4, 6]             // diagonals
+];
+
 class Game {
     constructor() {
-        // Initial setup of game components and state
-        this.gameBoard = new Board(); // Represents the main game board
-        this.circleTurn = false; // Tracks whose turn it is; false for X, true for O
-        this.activeMiniBoardIndex = null; // Index of the currently active mini-board
-        // Set up references to DOM elements for game messages and controls
+        // Initialize the game board and UI elements
+        this.gameBoard = new Board();
+        this.circleTurn = false; // Start with X's turn
+        this.activeMiniBoardIndex = null; // No active mini board at start
+        // Grab UI elements for later updates
         this.winningMessageElement = document.getElementById('winningMessage');
         this.winningMessageTextElement = document.querySelector('[data-winning-message-text]');
         this.restartButton = document.getElementById('restartButton');
-        // Event listener to restart the game when the button is clicked
         this.restartButton.addEventListener('click', () => this.startGame());
-        this.startGame(); // Kick off the game
+        // Kick off the game
+        this.startGame();
     }
 
-    // Sets up the game board for a new game or restarts the game
+    // Resets the game to the initial state
     startGame() {
-        this.circleTurn = false; // X always starts first
-        this.gameBoard.reset(); // Clear all mini-boards
-        this.activateAllMiniBoards(); // Enable all mini-boards for the first turn
-        this.setBoardHoverClass(); // Set the visual cue for the current player
-        this.winningMessageElement.classList.remove('show'); // Hide winning message if visible
-        this.gameBoard.setCellClickCallback(this.handleCellClick.bind(this)); // Bind cell click event
+        this.circleTurn = false; // X starts the game
+        this.gameBoard.reset(); // Clear the board
+        this.gameBoard.setCellClickCallback(this.handleCellClick.bind(this));
+        this.activateAllMiniBoards(); // Make all mini boards clickable
+        this.setBoardHoverClass(); // Set the hover class based on who's turn it is
+        this.winningMessageElement.classList.remove('show'); // Hide any winning message
     }
 
-    // Determines if the mini-board clicked is active or not
-    isActiveBoard(miniBoardIndex) {
-        // A mini-board is active if it's the next one in the sequence or if any can be played (no specific active board)
-        return this.activeMiniBoardIndex === null || this.activeMiniBoardIndex === miniBoardIndex;
-    }
-
-    // Event handler for cell clicks within mini-boards
+    // Handles clicks on cells within the mini boards
     handleCellClick(miniBoardIndex, cellIndex) {
-        // Ignore click if the mini-board isn't active
-        if (!this.isActiveBoard(miniBoardIndex)) return;
-        const currentPlayer = this.circleTurn ? CIRCLE_CLASS : X_CLASS;
+        // Check if the clicked cell is within the active mini board
+        if (!this.isActiveBoard(miniBoardIndex)) {
+            return; // If not, ignore the click
+        }
         const miniBoard = this.gameBoard.getMiniBoard(miniBoardIndex);
-        // Mark the cell and proceed if it's a valid move
+        const currentPlayer = this.circleTurn ? CIRCLE_CLASS : X_CLASS; // Determine current player
+        // Attempt to mark the cell for the current player
         if (miniBoard.markCell(currentPlayer, cellIndex)) {
-            this.processMove(miniBoard, cellIndex);
+            this.processMove(miniBoard, cellIndex); // Process the move if successful
         }
     }
 
-    // Processes a move and updates the game state accordingly
-    processMove(miniBoard, cellIndex) {
-        // Handle win/draw and turn swapping
-        this.checkWinner();
-        this.swapTurns(); // Change the active player
-        this.updateActiveMiniBoard(cellIndex); // Set the next active mini-board
-        this.setBoardHoverClass(); // Update the hover effect for the new active player
+    // Determines if the clicked mini board is the active board
+    isActiveBoard(miniBoardIndex) {
+        // The board is active if it's the next board to play in, or if there's no active board
+        return this.activeMiniBoardIndex === null || 
+               this.activeMiniBoardIndex === miniBoardIndex ||
+               this.gameBoard.getMiniBoard(this.activeMiniBoardIndex).getWinner() !== null;
     }
 
-    // Swaps the active player
-    swapTurns() {
-        this.circleTurn = !this.circleTurn;
-    }
-
-    // Updates visual cues to indicate the active player
-    setBoardHoverClass() {
-        this.gameBoard.board.classList.remove(X_CLASS, CIRCLE_CLASS);
-        this.gameBoard.board.classList.add(this.circleTurn ? CIRCLE_CLASS : X_CLASS);
-    }
-
-    // Activates all mini-boards at the start of the game
+    // Makes all mini boards active at the start of the game
     activateAllMiniBoards() {
         this.gameBoard.miniBoards.forEach(mb => mb.miniBoard.classList.add('active-mini-board'));
-        this.activeMiniBoardIndex = null;
+        this.activeMiniBoardIndex = null; // Reset the active mini board
     }
 
-    // Updates the active mini-board after a move
-    updateActiveMiniBoard(cellIndex) {
-        // If the mini-board played leads to a win or draw, activate all other non-completed boards
+    // Processes a move and updates the game state
+    processMove(miniBoard, cellIndex) {
+        // First, check if the current move won the game before swapping turns
+        this.checkWinner();
+        // Then, swap turns for the next player
+        this.swapTurns();
+        // Determine the next mini board to play in based on the last move
         const nextMiniBoard = this.gameBoard.getMiniBoard(cellIndex);
-        if (!nextMiniBoard.getWinner()) {
+        // Remove active class from all mini boards and set it on the next one
+        this.gameBoard.miniBoards.forEach(mb => mb.miniBoard.classList.remove('active-mini-board'));
+        if (nextMiniBoard.getWinner() === null) {
             nextMiniBoard.miniBoard.classList.add('active-mini-board');
             this.activeMiniBoardIndex = cellIndex;
         } else {
-            this.activateAllMiniBoards();
+            // If the next mini board is already won or drawn, make all boards active
+            this.activeMiniBoardIndex = null;
+            this.gameBoard.miniBoards.forEach(mb => {
+                if (mb.getWinner() === null) mb.miniBoard.classList.add('active-mini-board');
+            });
         }
     }
 
-    // Checks the overall game state for a win or draw
+    // The `checkWinner` function checks if the current player has won or if the game is a draw.
     checkWinner() {
+        // Determine the current player's class based on whose turn it is.
         const currentPlayer = this.circleTurn ? CIRCLE_CLASS : X_CLASS;
+        
+        // If the current player has won (by checking the win condition on the main board), end the game.
         if (this.gameBoard.checkWin(currentPlayer)) {
-            this.endGame(false); // End game with a win
-        } else if (this.gameBoard.checkDraw()) {
-            this.endGame(true); // End game with a draw
+            this.endGame(false); // False indicates that it's not a draw but a win.
+        } 
+        // If nobody has won but it's a draw (no more moves possible), end the game as a draw.
+        else if (this.gameBoard.checkDraw()) {
+            this.endGame(true); // True indicates it's a draw.
         }
     }
 
-    // Ends the game and displays the result
+    // The `endGame` function displays the winning message and reveals the winning message element.
     endGame(draw) {
-        const resultMessage = draw ? 'Draw!' : `${this.circleTurn ? "O's" : "X's"} Win!`;
-        this.winningMessageTextElement.innerText = resultMessage;
+        // Set the text to display if it's a draw or if there's a winner, depending on the `draw` parameter.
+        this.winningMessageTextElement.innerText = draw ? `Draw!` : `${this.circleTurn ? "O's" : "X's"} Win!`;
+        // Show the winning message to the players.
         this.winningMessageElement.classList.add('show');
+    }
+
+    // The `swapTurns` function inverts the turn (from X to O or O to X).
+    swapTurns() {
+        // Switch the turn to the opposite player.
+        this.circleTurn = !this.circleTurn;
+        // Update the hover class to reflect the current player's turn.
+        this.setBoardHoverClass();
+    }
+
+    // The `setBoardHoverClass` function updates the board's class for hover effects.
+    setBoardHoverClass() {
+        // First remove both potential hover classes.
+        this.gameBoard.board.classList.remove(X_CLASS, CIRCLE_CLASS);
+        // Then add the hover class corresponding to the player whose turn it is.
+        this.gameBoard.board.classList.add(this.circleTurn ? CIRCLE_CLASS : X_CLASS);
     }
 }
 
