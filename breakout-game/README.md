@@ -1,4 +1,4 @@
-﻿**Breakout Game**
+﻿*Breakout Game*
 
 This repository contains the source code for a simple Breakout (Brick Breaker) game. The game is developed with basic web technologies including HTML, CSS, and JavaScript.
 
