@@ -1,6 +1,6 @@
 # Ultimate Tic Tac Toe
 
-An implementation of the classic game Tic Tac Toe with an ultimate twist! Built upon the base template provided by [Web Dev Simplified](https://www.youtube.com/@WebDevSimplified), this project enhances the traditional gameplay experience by adding the ultimate challenge.
+An implementation of the classic game Tic Tac Toe with an ultimate twist! 
 
 [https://djschroeder.github.io/web-projects/uttt-game/uttt.html](https://djschroeder.github.io/web-projects/uttt-game/uttt.html)
 
@@ -18,5 +18,5 @@ The game continues until the main board is won, or there are no moves left, resu
 
 ## Acknowledgements
 
-- Base template and inspiration provided by [Web Dev Simplified](https://www.youtube.com/@WebDevSimplified)
+- Base code and inspiration created by following a tutorial provided by [Web Dev Simplified](https://www.youtube.com/@WebDevSimplified)
 - Refactoring and bug fixing assistance by OpenAI's ChatGPT
