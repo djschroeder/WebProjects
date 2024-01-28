@@ -20,7 +20,4 @@ Feel free to explore and test out these projects. Each project folder contains i
 ## **Community and Contributions**
 ### **Contributing**
 If you'd like to contribute to this repository or report issues, please open a pull request or create an issue on GitHub.
-## **Legal and Licensing**
-### **License**
-This repository is open-source under the Apache 2.0 License. You are free to use and modify these projects for your own purposes.
 
