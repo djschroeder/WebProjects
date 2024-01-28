@@ -18,5 +18,5 @@ The game continues until the main board is won, or there are no moves left, resu
 
 ## Acknowledgements
 
-- Base code and inspiration created by following a tutorial provided by [Web Dev Simplified](https://www.youtube.com/@WebDevSimplified)
+- Base code and inspiration created by following a tutorial provided by [Web Dev Simplified]([https://www.youtube.com/@WebDevSimplified](https://www.youtube.com/watch?v=Y-GkMjUZsmM))
 - Refactoring and bug fixing assistance by OpenAI's ChatGPT
