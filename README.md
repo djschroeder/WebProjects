@@ -4,7 +4,7 @@ Welcome to my Web Projects Repository! This repository is a collection of differ
 ### **Project List**
 Here is a list of the projects available in this repository:
 #### **Project 1 - Ultimate Tic Tac Toe**
-- **Description:** Ultimate Tic Tac Toe - what more is there to say?!
+- **Description:** Ultimate Tic Tac Toe - what more is their to say?!
 - **Web Path:** /uttt-game/uttt.html
 #### **Project 2 - Particle Animation**
 - **Description:** Simple interactive web canvas showing some neat particle animation.
@@ -20,7 +20,4 @@ Feel free to explore and test out these projects. Each project folder contains i
 ## **Community and Contributions**
 ### **Contributing**
 If you'd like to contribute to this repository or report issues, please open a pull request or create an issue on GitHub.
-## **Legal and Licensing**
-### **License**
-This repository is open-source under the Apache 2.0 License. You are free to use and modify these projects for your own purposes.
 
