@@ -93,6 +93,7 @@ class MiniBoard {
             const listener = this.cellEventListeners[index];
             // Remove the specific click listener attached to each cell
             cell.removeEventListener('click', listener);
+            cell.classList.remove(X_CLASS, CIRCLE_CLASS);
         });
     }
 
