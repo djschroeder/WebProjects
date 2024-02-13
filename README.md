@@ -11,7 +11,7 @@ Here is a list of the projects available in this repository:
 - **Web Path:** [https://djschroeder.github.io/WebProjects//particle-animation/particle-animation.html](https://djschroeder.github.io/WebProjects//particle-animation/particle-animation.html)
 #### **Project 3 - BreakOut**
 - **Description** A simple brickbreaker game.
-- **Web Path** [https://djschroeder.github.io/WebProjects//breakout-game/index.html](https://djschroeder.github.io/WebProjects//breakout-game/index.html)
+- **Web Path:** [https://djschroeder.github.io/WebProjects//breakout-game/index.html](https://djschroeder.github.io/WebProjects//breakout-game/index.html)
 ## **Usage Instructions**
 ### **Usage**
 Feel free to explore and test out these projects. Each project folder contains its HTML, CSS, and other related files. You can access and interact with the projects by following the web paths provided above.
