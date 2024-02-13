@@ -2,7 +2,7 @@
 
 An implementation of the classic game Tic Tac Toe with an ultimate twist! 
 
-[https://djschroeder.github.io/WebProjects/uttt-game/uttt.html](https://djschroeder.github.io/web-projects/uttt-game/uttt.html)
+[https://djschroeder.github.io/WebProjects/uttt-game/uttt.html](https://djschroeder.github.io/WebProjects/uttt-game/uttt.html)
 
 ## How to Play Ultimate Tic Tac Toe
 
