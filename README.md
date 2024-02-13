@@ -1,5 +1,5 @@
 ﻿# **Web Projects Repository**
-Welcome to my Web Projects Repository! This repository is a collection of different web projects, each contained in its own folder.
+Welcome to my Web Projects Repository! This repository is a collection of various disjoint web projects used for my own personal learning journey.
 ## **Overview**
 ### **Project List**
 Here is a list of the projects available in this repository:
@@ -12,11 +12,6 @@ Here is a list of the projects available in this repository:
 #### **Project 3 - BreakOut**
 - **Description** A simple brickbreaker game.
 - **Web Path** [https://djschroeder.github.io/WebProjects//breakout-game/index.html](https://djschroeder.github.io/WebProjects//breakout-game/index.html)
-## **Accessing Projects**
-### **How to Access Projects**
-To view a specific project, simply append the appropriate web path to the base URL of this repository. For example, if you want to access "Project 1," you can navigate to:
-
-<https://djschroeder.github.io/WebProjects/uttt-game/uttt.html>
 ## **Usage Instructions**
 ### **Usage**
 Feel free to explore and test out these projects. Each project folder contains its HTML, CSS, and other related files. You can access and interact with the projects by following the web paths provided above.
