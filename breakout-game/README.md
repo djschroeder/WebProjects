@@ -6,6 +6,8 @@ This repository contains the source code for a simple Breakout (Brick Breaker) g
 
 Breakout is a classic arcade game where the player controls a paddle with the arrow keys (or mouse) to bounce a ball against a wall of bricks, aiming to destroy them all to progress to the next level. This implementation is a simplified version aimed at demonstrating basic programming concepts and game mechanics.
 
+[https://djschroeder.github.io/WebProjects/breakout-game/index.html](https://djschroeder.github.io/WebProjects/breakout-game/index.html)
+
 ### **How to Play**
 
 To play the game, simply open the index.html file in a web browser. Use the left and right arrow keys or mouse to move the paddle. The goal is to break all the bricks without letting the ball fall below the paddle.
