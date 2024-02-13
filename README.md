@@ -13,7 +13,7 @@ Here is a list of the projects available in this repository:
 ### **How to Access Projects**
 To view a specific project, simply append the appropriate web path to the base URL of this repository. For example, if you want to access "Project 1," you can navigate to:
 
-<https://djschroeder.github.io/web-projects/uttt-game/uttt.html>
+<https://djschroeder.github.io/WebProjects/uttt-game/uttt.html>
 ## **Usage Instructions**
 ### **Usage**
 Feel free to explore and test out these projects. Each project folder contains its HTML, CSS, and other related files. You can access and interact with the projects by following the web paths provided above.
